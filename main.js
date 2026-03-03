@@ -29,7 +29,7 @@ requestAnimationFrame(raf);
 lenis.stop();
 
 // --- Lógica del Loader y Entrada ---
-document.addEventListener("DOMContentLoaded", () => {
+function iniciarCarga() {
   const loaderBar = document.querySelector('.loader-bar');
   const loaderStatus = document.querySelector('.loader-status');
   const loader = document.getElementById('loader');
@@ -62,7 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 600);
     }
   }, 120);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', iniciarCarga);
+} else {
+  iniciarCarga();
+}
 
 // --- Animaciones GSAP (Hero Parallax 2D) ---
 const heroTl = gsap.timeline({ paused: true });
