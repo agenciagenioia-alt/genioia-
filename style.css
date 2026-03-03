@@ -600,6 +600,10 @@ a {
   grid-column: span 12;
 }
 
+.card-deerburgers {
+  grid-column: span 12;
+}
+
 @media (min-width: 900px) {
   .card-avm {
     grid-column: span 8;
@@ -616,6 +620,10 @@ a {
 
   .card-terrasanasas {
     grid-column: span 6;
+  }
+
+  .card-deerburgers {
+    grid-column: span 12;
   }
 }
 
