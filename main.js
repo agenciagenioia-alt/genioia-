@@ -207,36 +207,68 @@ const authoritySection = document.querySelector('.authority-section');
 // Establecer perspectiva 3D al contenedor grid
 gsap.set('.bento-grid', { perspective: 1500 });
 
-// Definir timeline atada al scroll
-const authorityTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: authoritySection,
-    start: 'top top', // Empieza cuando la sección cubre completamente la pantalla
-    end: '+=300%', // El usuario tiene que hacer bastante scroll para revelar todas las tarjetas
-    pin: true, // Fija la sección en pantalla
-    scrub: 1, // Suaviza la animación atada a la rueda del mouse
-  }
+// Usar matchMedia para separar animaciones por dispositivo
+let mm = gsap.matchMedia();
+
+// DESKTOP: Animación anclada (Pinned) con Scrub
+mm.add("(min-width: 900px)", () => {
+  const authorityTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: authoritySection,
+      start: 'top top',
+      end: '+=300%',
+      pin: true,
+      scrub: 1,
+    }
+  });
+
+  authorityTl.fromTo(bentoCards,
+    {
+      y: window.innerHeight * 0.4,
+      opacity: 0,
+      scale: 0.8,
+      rotationX: 25,
+      transformOrigin: "bottom center"
+    },
+    {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      rotationX: 0,
+      duration: 1,
+      stagger: 0.8,
+      ease: "power2.out"
+    }
+  );
 });
 
-// Animar las tarjetas una por una (stagger) mientras se hace scrub
-authorityTl.fromTo(bentoCards,
-  {
-    y: window.innerHeight * 0.4, // Empieza desde abajo
-    opacity: 0,
-    scale: 0.8,
-    rotationX: 25, // Inclinación espectacular inicial
-    transformOrigin: "bottom center"
-  },
-  {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-    rotationX: 0,
-    duration: 1,
-    stagger: 0.8, // Cada tarjeta espera a la anterior
-    ease: "power2.out"
-  }
-);
+// MÓVIL: Animación individual 3D (Saliendo desde atrás) sin anclaje
+mm.add("(max-width: 899px)", () => {
+  bentoCards.forEach((card) => {
+    gsap.fromTo(card,
+      {
+        y: 40,
+        opacity: 0,
+        scale: 0.75, // Sale más pequeño desde el fondo
+        rotationX: -10, // Inclinación que emula salir "desde atrás"
+        transformOrigin: "center center"
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        rotationX: 0,
+        duration: 0.9,
+        ease: "back.out(1.5)", // Efecto rebote suave
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%', // Se dispara cuando la tarjeta entra abajo
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  });
+});
 
 // --- Efecto Texto Cibernético en los Títulos ---
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
