@@ -1374,23 +1374,30 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--primary-glow);
-  color: #000;
+  background: rgba(0, 242, 255, 0.1);
+  color: var(--primary-glow);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  backdrop-filter: blur(10px);
   z-index: 1000;
-  box-shadow: 0 10px 30px rgba(0, 242, 255, 0.4), 0 0 20px rgba(0, 242, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 255, 0.2);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-decoration: none;
 }
 
-.floating-whatsapp i {
+.floating-whatsapp svg.wa-icon {
   width: 32px;
   height: 32px;
+  fill: currentColor;
+  stroke: none;
+  transition: all 0.3s ease;
 }
 
 .floating-whatsapp:hover {
   transform: scale(1.1) translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 242, 255, 0.6), 0 0 30px rgba(0, 242, 255, 0.4);
-  background: #fff;
+  background: rgba(0, 242, 255, 0.2);
+  border-color: rgba(0, 242, 255, 0.6);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 242, 255, 0.5);
+  color: #fff;
 }
 
 /* Bolita roja de Notificación (Badge) */
