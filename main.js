@@ -247,10 +247,10 @@ mm.add("(max-width: 899px)", () => {
   bentoCards.forEach((card) => {
     gsap.fromTo(card,
       {
-        y: 40,
+        y: 60,
         opacity: 0,
-        scale: 0.75, // Sale más pequeño desde el fondo
-        rotationX: -10, // Inclinación que emula salir "desde atrás"
+        scale: 0.85,
+        rotationX: -10,
         transformOrigin: "center center"
       },
       {
@@ -258,12 +258,13 @@ mm.add("(max-width: 899px)", () => {
         opacity: 1,
         scale: 1,
         rotationX: 0,
-        duration: 0.9,
-        ease: "back.out(1.5)", // Efecto rebote suave
+        duration: 0.8,
+        ease: "back.out(1.2)",
+        clearProps: "transform", // Limpia para evitar bugs visuales tras animar
         scrollTrigger: {
           trigger: card,
-          start: 'top 85%', // Se dispara cuando la tarjeta entra abajo
-          toggleActions: 'play none none reverse'
+          start: "top 85%", // Ejecuta cuando entra en pantalla
+          toggleActions: "play none none reverse"
         }
       }
     );
