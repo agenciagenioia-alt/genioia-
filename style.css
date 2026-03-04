@@ -1273,3 +1273,186 @@ a {
   font-size: 1.1rem;
   margin-top: 1rem;
 }
+
+/* =========================================
+   UX / CRO 10/10: ENHANCEMENTS 
+   ========================================= */
+
+/* --- 1. Custom Cyber Cursor --- */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+    /* Ocultar cursor nativo sólo si hay mouse */
+  }
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--primary-glow);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
+  mix-blend-mode: screen;
+}
+
+#custom-cursor.cursor-hover {
+  width: 45px;
+  height: 45px;
+  background-color: rgba(0, 242, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.6), inset 0 0 10px rgba(0, 242, 255, 0.3);
+  border-width: 1px;
+}
+
+/* --- 2. Live Social Proof (FOMO Popup) --- */
+.social-proof-popup {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(10, 15, 25, 0.85);
+  border: 1px solid rgba(0, 242, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 255, 0.1);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  transform: translateX(-150%);
+  /* Oculto por defecto */
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+  opacity: 0;
+  max-width: 300px;
+}
+
+.social-proof-popup.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.proof-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(0, 242, 255, 0.1);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.proof-text p {
+  font-size: 0.85rem;
+  color: #fff;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.proof-time {
+  font-size: 0.7rem;
+  color: var(--primary-glow);
+  opacity: 0.8;
+}
+
+/* --- 3. Botón Flotante WhatsApp --- */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-glow);
+  color: #000;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 242, 255, 0.4), 0 0 20px rgba(0, 242, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+}
+
+.floating-whatsapp i {
+  width: 32px;
+  height: 32px;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 242, 255, 0.6), 0 0 30px rgba(0, 242, 255, 0.4);
+  background: #fff;
+}
+
+/* Bolita roja de Notificación (Badge) */
+.wa-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3333;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  height: 22px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #050505;
+  box-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 51, 51, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 51, 51, 0);
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* En móviles, reubicamos la prueba social arriba o reducimos para no colisionar con WA */
+  .social-proof-popup {
+    bottom: unset;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    width: 90%;
+    max-width: 350px;
+  }
+
+  .social-proof-popup.show {
+    transform: translate(-50%, 0);
+  }
+
+  /* El custom cursor no aplica en mobile/touch, por lo que estéticamente no afecta */
+  .floating-whatsapp {
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+  }
+
+  .floating-whatsapp i {
+    width: 28px;
+    height: 28px;
+  }
+}

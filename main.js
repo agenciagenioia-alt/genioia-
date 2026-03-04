@@ -398,3 +398,78 @@ faqItems.forEach(item => {
     }
   });
 });
+
+// =========================================
+// UX / CRO 10/10: ENHANCEMENTS
+// =========================================
+
+// --- 1. Custom Cyber Cursor ---
+const customCursor = document.getElementById('custom-cursor');
+
+// Mostrar cursor solo en desktop (pointer cursor real)
+if (window.matchMedia("(pointer: fine)").matches && customCursor) {
+  // Seguir movimiento del mouse
+  document.addEventListener('mousemove', (e) => {
+    customCursor.style.left = e.clientX + 'px';
+    customCursor.style.top = e.clientY + 'px';
+  });
+
+  // Efecto magnético/hover en elementos interactivos
+  const interactables = document.querySelectorAll('a, button, .glass-panel, .faq-question, input');
+
+  interactables.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      customCursor.classList.add('cursor-hover');
+    });
+    el.addEventListener('mouseleave', () => {
+      customCursor.classList.remove('cursor-hover');
+    });
+  });
+}
+
+// --- 2. Live Social Proof (FOMO Popup) ---
+const fomoPopup = document.getElementById('social-proof');
+const fomoMessage = document.getElementById('proof-message');
+const fomoTime = document.getElementById('proof-time');
+
+if (fomoPopup) {
+  const fomoData = [
+    { msg: "Clínica Dental en Miami acaba de agendar el Nivel Scale.", time: "Hace unos segundos" },
+    { msg: "Restaurante en Bogotá adquirió Growth Partner.", time: "Hace 2 minutos" },
+    { msg: "E-commerce en CDMX solicitó Diagnóstico.", time: "Hace 5 minutos" },
+    { msg: "Agencia de Viajes conectó su CRM con n8n.", time: "Hace unos segundos" },
+    { msg: "Marca de Lujo compró 25 Creativos de IA.", time: "Hace 1 minuto" }
+  ];
+
+  function showRandomFomo() {
+    // Escoger mensaje aleatorio
+    const randomFomo = fomoData[Math.floor(Math.random() * fomoData.length)];
+
+    // Asignar texto
+    fomoMessage.innerText = randomFomo.msg;
+    fomoTime.innerText = randomFomo.time;
+
+    // Mostrar
+    fomoPopup.classList.add('show');
+
+    // Ocultar después de 5 segundos
+    setTimeout(() => {
+      fomoPopup.classList.remove('show');
+    }, 5000);
+  }
+
+  // Iniciar ciclo: se muestra un popup cada 15 a 25 segundos aleatoriamente
+  function scheduleNextFomo() {
+    const nextInterval = Math.floor(Math.random() * (25000 - 15000 + 1) + 15000);
+    setTimeout(() => {
+      showRandomFomo();
+      scheduleNextFomo();
+    }, nextInterval);
+  }
+
+  // Primer arranque después de 8 segundos de la página cargada
+  setTimeout(() => {
+    showRandomFomo();
+    scheduleNextFomo();
+  }, 8000);
+}
